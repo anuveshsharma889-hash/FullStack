@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+
+<style>
+
+:root{/* means whole page */
+  --bg:#ed0909;     
+  --text:#000;      
+  --card:#fff;      
+}
+
+body.dark{/* color changes to dark*/ 
+  --bg:#121212;   
+  --text:#fff;      
+  --card:#1e1e1e;  
+}
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:var(--bg);   
+  color:var(--text);      
+}
+
+/*MAIN GRID LAYOUT*/
+.dashboard{
+  display:grid;   /* enable CSS Grid */
+  grid-template-areas:
+    "h h"
+    "s m";         /* h = header, s = sidebar, m = main */
+  grid-template-columns:150px 1fr;
+  grid-template-rows:50px 1fr;
+  height:100vh;   /* full screen height */
+}
+
+
+header{
+  grid-area:h;         /* place in grid area 'h' */
+  background:#215c06;
+  color:rgb(126, 11, 11);
+  padding:10px;
+}
+
+
+aside{
+  grid-area:s;         /* place in grid area 's' */
+  background:var(--card);
+  padding:10px;
+}
+
+
+main{
+  grid-area:m;         /* place in grid area 'm' */
+  padding:10px;
+  display:grid;        /* grid for cards */
+  grid-template-columns:repeat(2,1fr);  /* 2 cards per row */
+  gap:10px;
+}
+
+/*CARD STYLE*/
+.card{
+  background:var(--card);
+  padding:15px;
+  text-align:center;
+}
+
+/*RESPONSIVE FOR MOBILE*/
+@media(max-width:600px){
+  .dashboard{
+    grid-template-areas:
+      "h"
+      "m"
+      "s";          /* stack layout vertically */
+    grid-template-columns:1fr;
+    grid-template-rows:50px 1fr auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!--MAIN CONTAINER -->
+<div class="dashboard">
+
+  <!-- HEADER-->
+  <header>
+    Admin Dashboard 
+    <!-- Button to change theme -->
+    <button onclick="toggle()">Toggle</button>
+  </header>
+
+  <!--SIDEBAR -->
+  <aside>Menu</aside>
+
+  <!--MAIN CONTENT-->
+  <main>
+    <div class="card">Users</div>
+    <div class="card">Sales</div>
+    <div class="card">Messages</div>
+    <div class="card">Reports</div>
+  </main>
+
+</div>
+
+<script>
+/*  LOAD SAVED THEME FROM localStorage */
+if(localStorage.theme=="dark")
+  document.body.classList.add("dark");/*dynamically apply dark to the body of web page */
+
+/* FUNCTION TO CHANGE THEME */
+function toggle(){
+  /* Add/remove dark class */
+  document.body.classList.toggle("dark");
+
+  /* Save user choice in localStorage */
+  localStorage.theme = document.body.classList.contains("dark") ? "dark" : "light";
+}
+</script>
+
+</body>
+</html>
