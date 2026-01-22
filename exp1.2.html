@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank App</title>
+
+    <style>
+        /* Page center */
+        body {
+            font-family: Arial;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Main box */
+        .box {
+            width: 300px;
+        }
+
+        /* Buttons style */
+        button {
+            padding: 10px;
+            width: 48%;
+            font-size: 18px;
+            color: white;
+            border: none;
+        }
+
+        .d { background: blue; }    /* Deposit button */
+        .w { background: red; }     /* Withdraw button */
+
+        #msg { color: red; font-size: 18px; } /* Error text */
+    </style>
+</head>
+<body>
+
+<div class="box">
+
+    <!-- Balance text -->
+    <h1>Balance: $<span id="bal">1000</span></h1>
+
+    <!-- Input box -->
+    <input type="number" id="amt" placeholder="Enter amount">
+
+    <br><br>
+
+    <!-- Buttons -->
+    <button class="d" onclick="deposit()">Deposit</button>
+    <button class="w" onclick="withdraw()">Withdraw</button>
+
+    <!-- Message text -->
+    <p id="msg"></p>
+
+</div>
+
+<script>
+    // Store balance
+    let balance = 1000;
+
+    // Deposit function
+    function deposit() {
+        let a = Number(document.getElementById("amt").value);
+
+        // Check invalid
+        if (a <= 0) {
+            document.getElementById("msg").innerText = "Invalid amount!";
+            return;
+        }
+
+        // Add money
+        balance += a;
+
+        // Update balance on screen
+        document.getElementById("bal").innerText = balance;
+
+        // Clear message
+        document.getElementById("msg").innerText = "";
+    }
+
+    // Withdraw function
+    function withdraw() {
+        let a = Number(document.getElementById("amt").value);
+
+        // Check invalid or more than balance
+        if (a <= 0 || a > balance) {
+            document.getElementById("msg").innerText = "Invalid amount!";
+            return;
+        }
+
+        // Subtract money
+        balance -= a;
+
+        // Update balance
+        document.getElementById("bal").innerText = balance;
+
+        // Clear message
+        document.getElementById("msg").innerText = "";
+    }
+</script>
+
+</body>
+</html>

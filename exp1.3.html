@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <title>BANK APP</title>
+        <style>
+           body {
+            font-family: Arial;
+            display: flex;
+            justify-content:center ;
+            align-items: center;
+            height: 100vh;
+           }
+           .box {
+            background: rgb(131, 55, 55);
+            padding: 20px;/*space inside box  */
+               width:300px ;
+               text-align: center;/* center me hona chaiye box */
+               border-radius: 8px;/*rounded corner  */
+
+           }
+           button{
+            padding: 10px;/*big button */
+            width: 45%;
+            border: none;/*remove or no border  */
+            color: white;/*text color white   */
+           }
+           .d{
+            background:green;/*deposit button  */
+           }
+           .w{
+            background: red;/* deposit button */
+           }
+         
+        </style>
+    </head>
+    <body>
+    <div class="box">
+        <h2>MY BANK</h2>
+      <h2>My Bank</h2>
+    <h3>Balance: ₹ <span id="bal">1000</span></h3>
+
+    <input type="number" id="amt" placeholder="Enter amount">
+
+
+            <button class="d">deposit</button>
+            <button class="w">withdraw</button>
+             <p id="msg"></p>
+    </div>
+    <script>
+    // Get elements
+    let balance = 1000;
+    let balSpan = document.getElementById("bal");
+    let amtInput = document.getElementById("amt");
+    let msg = document.getElementById("msg");
+
+    // Deposit function
+    function deposit() {
+        let amount = Number(amtInput.value);
+
+        if (amount <= 0) {
+            msg.innerText = "Enter a valid amount!";
+            return;
+        }
+
+        balance = balance + amount;
+        balSpan.innerText = balance;
+        msg.innerText = "Deposit successful!";
+        amtInput.value = "";
+    }
+
+    // Withdraw function
+    function withdraw() {
+        let amount = Number(amtInput.value);
+
+        if (amount <= 0) {
+            msg.innerText = "Enter a valid amount!";
+            return;
+        }
+
+        if (amount > balance) {
+            msg.innerText = "Insufficient balance!";
+            return;
+        }
+
+        balance = balance - amount;
+        balSpan.innerText = balance;
+        msg.innerText = "Withdrawal successful!";
+        amtInput.value = "";
+    }
+</script>
+
+ </body>
+</html>
