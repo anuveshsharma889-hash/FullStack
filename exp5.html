@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Product Filter</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 40px;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .product {
+            border: 1px solid #930000;
+            padding: 10px;
+            margin: 10px 0;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Product List</h2>
+<!---whenever the user select sortProducts() will call  -->>
+    <select onchange="sortProducts()">
+        <option value="default">Sort By</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+    </select>
+
+    <div id="productList">
+        <div class="product" data-price="300">Shoes - ₹300</div>
+        <div class="product" data-price="150">T-Shirt - ₹150</div>
+        <div class="product" data-price="500">Jacket - ₹500</div>
+        <div class="product" data-price="200">Cap - ₹200</div>
+    </div>
+
+    <script>
+        function sortProducts() {
+            let select = document.querySelector("select").value;
+            let productList = document.getElementById("productList");//all product divs inside productList and converts them into an array
+            let products = Array.from(productList.children);
+
+            products.sort(function(a, b) {
+                let priceA = Number(a.getAttribute("data-price"));
+                let priceB = Number(b.getAttribute("data-price"));
+               //takes two products, reads their prices, converts them to numbers,and compares them to arrange products in correct order
+                if (select === "low") {
+                    return priceA - priceB; // ascending
+                } else if (select === "high") {
+                    return priceB - priceA; // descending
+                }
+            });
+
+            // Remove old order and add new order
+            productList.innerHTML = "";
+            products.forEach(function(item) {
+                productList.appendChild(item);
+            });
+        }
+    </script>
+
+</body>
+</html>  

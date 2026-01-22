@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Character Counter</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 50px;
+        }
+
+        textarea {
+            width: 300px;
+            height: 120px;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        #count {
+            margin-top: 10px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Type Your Message</h2>
+
+    <textarea id="textBox" maxlength="200" oninput="countChar()"></textarea> <!-- oninput=whenever user type fucution runs  -->
+
+
+    <div id="count">Characters: 0 / 200</div><!--text will change whenever user types -->
+
+
+    <script>
+        function countChar() {
+            let text = document.getElementById("textBox").value;   /*take the text and store it in variable */
+            let length = text.length;
+
+            document.getElementById("count").innerText = "Characters: " + length + " / 200";/*update the counter text on screen*/
+        }
+    </script>
+
+</body>
+</html>
