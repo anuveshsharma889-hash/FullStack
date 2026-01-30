@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple SVG Drawing</title>
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    width:500px;
+}
+
+svg{
+    border:2px dashed #aaa;
+    border-radius:10px;
+    background:#fafafa;
+    cursor:crosshair;
+}
+
+button{
+    padding:8px 15px;
+    background:#2979ff;
+    border:none;
+    color:white;
+    border-radius:5px;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>SVG Drawing Tool</h2>
+
+    Color: <input type="color" id="color" value="#2979ff">
+    <button onclick="undo()">Undo</button>
+    <br><br>
+
+    <svg id="board" width="4000" height="300"></svg>
+
+    <h3>Circles drawn: <span id="count">0</span></h3>
+</div>
+
+<script>
+let board = document.getElementById("board");/* GET SVG DRAWING AREA*/
+let color = document.getElementById("color");/* GET PICK COLOR*/
+let countText = document.getElementById("count");/*GET DISPLAY NUMBER */
+
+let circles = [];/*LIST TO STORE ALL CIRCLE */
+
+// FUNCUTION WHEN CLICK INSIDE SVG 
+board.onclick = function(e){
+    let x = e.offsetX;// FIND MOUSE CLICK POSITION 
+    let y = e.offsetY;
+
+    let c = document.createElementNS("http://www.w3.org/2000/svg","circle");//CREATE NEW SVG CIRCLE 
+    c.setAttribute("cx", x);//SET CIRCLE POSITION 
+    c.setAttribute("cy", y);
+    c.setAttribute("r", 7);//CIRCLE SIZE 7
+    c.setAttribute("fill", color.value);//CHOOSE COLOR 
+
+    board.appendChild(c);//SHOW CIRCLE ON SCREEN 
+    circles.push(c);//SAVE THE CIRCLE 
+
+    countText.innerText = circles.length;//UPDATE CIRCLE COUNT  
+}
+
+// Undo last circle
+function undo(){
+    if(circles.length > 0){
+        let last = circles.pop();
+        board.removeChild(last);
+        countText.innerText = circles.length;
+    }
+}
+</script>
+
+</body>
+</html>
