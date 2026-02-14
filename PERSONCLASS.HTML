@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Person Class Hierarchy</title>
+
+  <!-- React CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #f8fbff, #eef3f8);
+      color: #111827;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 40px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border: 1px solid #e5e7eb;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 32px;
+    }
+
+    .age {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      font-style: italic;
+      font-size: 22px;
+      color: #4b5563;
+      margin-bottom: 12px;
+    }
+
+    .extra {
+      font-size: 24px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+  // Base Class
+  class Person {
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+
+    introduce() {
+      return `Hello, my name is ${this.name}.`;
+    }
+  }
+
+  // Student Class (inherits Person)
+  class Student extends Person {
+    constructor(name, age, major) {
+      super(name, age);
+      this.major = major;
+    }
+
+    introduce() {
+      return `Hello, my name is ${this.name} and I'm studying ${this.major}.`;
+    }
+  }
+
+  // Teacher Class (inherits Person)
+  class Teacher extends Person {
+    constructor(name, age, subject) {
+      super(name, age);
+      this.subject = subject;
+    }
+
+    introduce() {
+      return `Hello, my name is ${this.name} and I teach ${this.subject}.`;
+    }
+  }
+
+  function PersonCard({ title, person, extraLabel, extraValue }) {
+    return (
+      <div className="card">
+        <h2>{person.name} ({title})</h2>
+        <div className="age">Age: {person.age}</div>
+        <div className="intro">{person.introduce()}</div>
+        {extraLabel && (
+          <div className="extra">{extraLabel}: {extraValue}</div>
+        )}
+      </div>
+    );
+  }
+
+  function App() {
+
+    const person = new Person("Alex Johnson", 30);
+    const student = new Student("Emma Watson", 20, "Computer Science");
+    const teacher = new Teacher("Dr. James Wilson", 45, "Mathematics");
+
+    return (
+      <>
+        <h1>Person Class Hierarchy</h1>
+
+        <div className="container">
+          <PersonCard
+            title="Person"
+            person={person}
+          />
+
+          <PersonCard
+            title="Student"
+            person={student}
+            extraLabel="Major"
+            extraValue={student.major}
+          />
+
+          <PersonCard
+            title="Teacher"
+            person={teacher}
+            extraLabel="Teaching"
+            extraValue={teacher.subject}
+          />
+        </div>
+      </>
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<App />);
+
+</script>
+
+</body>
+</html>
