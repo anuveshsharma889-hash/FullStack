@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Experiment 3.2 - Library Management UI</title>
+
+  <!-- React CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #f8fbff, #eef3f8);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 30px;
+      color: #1f2937;
+    }
+
+    .panel {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 15px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .add-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .book {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: inset 0 0 0 1px #e2e8f0;
+    }
+
+    .book h3 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .book p {
+      margin: 6px 0 0;
+      color: #4b5563;
+    }
+
+    .remove-btn {
+      background: #ef4444;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+  function LibraryApp() {
+
+    const [books, setBooks] = React.useState([
+      { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald" },
+      { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee" }
+    ]);
+
+    const [search, setSearch] = React.useState("");
+    const [title, setTitle] = React.useState("");
+    const [author, setAuthor] = React.useState("");
+
+    const addBook = () => {
+      if (title && author) {
+        setBooks([...books, {
+          id: Date.now(),
+          title,
+          author
+        }]);
+        setTitle("");
+        setAuthor("");
+      }
+    };
+
+    const removeBook = (id) => {
+      setBooks(books.filter(book => book.id !== id));
+    };
+
+    const filteredBooks = books.filter(book =>
+      book.title.toLowerCase().includes(search.toLowerCase()) ||
+      book.author.toLowerCase().includes(search.toLowerCase())
+    );
+
+    return (
+      <>
+        <h1>Library Management System</h1>
+
+        <div className="panel">
+
+          <input
+            placeholder="Search books..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          <div className="form-row">
+            <input
+              placeholder="Book Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <input
+              placeholder="Author"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
+            <button className="add-btn" onClick={addBook}>
+              Add Book
+            </button>
+          </div>
+
+          {filteredBooks.map(book => (
+            <div className="book" key={book.id}>
+              <div>
+                <h3>{book.title}</h3>
+                <p>by {book.author}</p>
+              </div>
+              <button
+                className="remove-btn"
+                onClick={() => removeBook(book.id)}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+
+        </div>
+      </>
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<LibraryApp />);
+
+</script>
+
+</body>
+</html>
